@@ -10,7 +10,7 @@ packages/
 docker/
   Dockerfile.*  # 서비스별 Docker 설정
 docker-compose.dev.yml
-router-compose.prod.yml
+docker-compose.prod.yml
 .env.example
 ```
 
