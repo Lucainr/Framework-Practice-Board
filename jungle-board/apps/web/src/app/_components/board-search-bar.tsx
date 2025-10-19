@@ -3,17 +3,24 @@
 type BoardSearchBarProps = {
   placeholder?: string;
   defaultValue?: string;
+  category?: string;
 };
 
 export default function BoardSearchBar({
   placeholder = "검색어를 입력하세요",
   defaultValue = "",
+  category,
 }: BoardSearchBarProps) {
   return (
     <form
       role="search"
+      method="get"
+      action="/main-board"
       className="flex w-full items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-2 shadow-inner sm:w-auto"
     >
+      {category ? (
+        <input type="hidden" name="category" value={category} />
+      ) : null}
       <label htmlFor="board-search" className="sr-only">
         게시판 검색
       </label>
@@ -36,6 +43,7 @@ export default function BoardSearchBar({
         type="search"
         defaultValue={defaultValue}
         placeholder={placeholder}
+        name="search"
         className="flex-1 border-none bg-transparent text-sm text-zinc-700 placeholder:text-zinc-400 focus:outline-none"
       />
       <button

@@ -12,3 +12,21 @@ export type PostSummary = {
   pinned?: boolean;
   isNew?: boolean;
 };
+
+export type Comment = {
+  id: number;
+  content: string;
+  author: string;
+  createdAt: string;
+};
+
+export type PostDetail = {
+  id: number;
+  title: string;
+  content: string;
+  author: string;
+  category: PostCategory | string;
+  views: number;
+  createdAt: string;
+  comments: Comment[];
+};
