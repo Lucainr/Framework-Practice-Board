@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@jungle-board/shared": "workspace:*",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "next": "15.5.6"
