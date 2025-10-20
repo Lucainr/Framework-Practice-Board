@@ -10,7 +10,7 @@ type CommunityHeroProps = {
 };
 
 export default function CommunityHero({
-  primaryHref = "/login",
+  primaryHref = "/main-board",
   primaryLabel = "커뮤니티 게시판 바로가기",
   secondaryHref = "/info-board",
   secondaryLabel = "스터디 소개 보기",
