@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type CommunityHeroProps = {
   primaryHref?: string;
@@ -10,13 +12,20 @@ type CommunityHeroProps = {
 };
 
 export default function CommunityHero({
-  primaryHref = "/main-board",
+  primaryHref = "/login",
   primaryLabel = "커뮤니티 게시판 바로가기",
   secondaryHref = "/info-board",
   secondaryLabel = "스터디 소개 보기",
 }: CommunityHeroProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch(primaryHref);
+    router.prefetch(secondaryHref);
+  }, [primaryHref, secondaryHref, router]);
+
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center bg-white px-4 py-24">
+    <section className="flex min-h-screen flex-col items-center justify-center bg-zinc-50 px-4 py-24">
       <div className="flex max-w-3xl flex-col items-center gap-6 text-center">
         <p className="text-sm font-semibold tracking-[0.28em] text-emerald-500">
           STUDY HUB

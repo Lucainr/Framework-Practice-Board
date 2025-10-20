@@ -15,6 +15,7 @@ type Comment = {
   author: string;
   content: string;
   createdAt: string;
+  authorId: number | null;
 };
 
 type PostDetail = {
@@ -26,6 +27,7 @@ type PostDetail = {
   createdAt: string;
   views: number;
   comments: Comment[];
+  authorId: number | null;
 };
 
 const API_BASE_URL =
@@ -62,9 +64,11 @@ async function fetchPost(id: string): Promise<PostDetail | null> {
 
     return {
       ...data,
+      authorId: data.authorId ?? null,
       createdAt: data.createdAt ?? data.created_at ?? new Date().toISOString(),
       comments: (data.comments ?? []).map((comment) => ({
         ...comment,
+        authorId: comment.authorId ?? null,
         createdAt: comment.createdAt ?? new Date().toISOString(),
       })),
     } satisfies PostDetail;
@@ -139,7 +143,11 @@ export default async function PostDetailPage({
                   <span className="text-zinc-300">•</span>
                   <span>댓글 {comments.length}</span>
                 </div>
-                <PostActions postId={post.id} apiBaseUrl={API_BASE_URL} />
+                <PostActions
+                  postId={post.id}
+                  authorId={post.authorId}
+                  apiBaseUrl={API_BASE_URL}
+                />
               </div>
             </div>
 

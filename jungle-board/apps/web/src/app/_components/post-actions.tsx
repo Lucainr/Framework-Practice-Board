@@ -3,18 +3,27 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuth } from "../_hooks/use-auth";
 
 type PostActionsProps = {
   postId: number;
   apiBaseUrl: string;
+  authorId: number | null;
 };
 
-export default function PostActions({ postId, apiBaseUrl }: PostActionsProps) {
+export default function PostActions({ postId, apiBaseUrl, authorId }: PostActionsProps) {
   const router = useRouter();
+  const { auth } = useAuth();
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async () => {
     if (deleting) {
+      return;
+    }
+
+    if (!auth?.token || auth.user.id !== authorId || authorId === null) {
+      // eslint-disable-next-line no-alert
+      alert("본인 게시글만 삭제할 수 있습니다.");
       return;
     }
 
@@ -28,10 +37,14 @@ export default function PostActions({ postId, apiBaseUrl }: PostActionsProps) {
     try {
       const response = await fetch(`${apiBaseUrl}/posts/${postId}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
       });
 
       if (!response.ok) {
-        throw new Error("게시글 삭제에 실패했습니다.");
+        const message = await response.text();
+        throw new Error(message || "게시글 삭제에 실패했습니다.");
       }
 
       router.replace("/main-board");
@@ -43,6 +56,10 @@ export default function PostActions({ postId, apiBaseUrl }: PostActionsProps) {
       setDeleting(false);
     }
   };
+
+  if (!auth?.token || authorId === null || auth.user.id !== authorId) {
+    return null;
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-2">
