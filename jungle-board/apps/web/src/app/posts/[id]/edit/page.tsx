@@ -10,6 +10,7 @@ type PostDetail = {
   content: string;
   author: string;
   category: string;
+  authorId: number | null;
 };
 
 async function fetchPost(id: string): Promise<PostDetail | null> {
@@ -22,7 +23,16 @@ async function fetchPost(id: string): Promise<PostDetail | null> {
       return null;
     }
 
-    return (await response.json()) as PostDetail;
+    const data = (await response.json()) as PostDetail & { authorId?: number | null };
+
+    return {
+      id: data.id,
+      title: data.title,
+      content: data.content,
+      category: data.category,
+      author: data.author,
+      authorId: data.authorId ?? null,
+    };
   } catch (error) {
     console.error("Failed to load post", error);
     return null;
@@ -61,8 +71,9 @@ export default async function EditPostPage({
           initialValues={{
             title: post.title,
             content: post.content,
-            author: post.author,
             category: post.category,
+            authorId: post.authorId,
+            authorName: post.author,
           }}
         />
       </div>
