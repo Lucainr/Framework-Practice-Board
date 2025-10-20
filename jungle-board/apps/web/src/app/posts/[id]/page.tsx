@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CommentForm from "../../_components/comment-form";
+import PostActions from "../../_components/post-actions";
 
 const CATEGORY_STYLES: Record<string, string> = {
   공지: "bg-amber-100 text-amber-700",
@@ -129,13 +130,16 @@ export default async function PostDetailPage({
               <h2 className="text-3xl font-bold text-zinc-900 sm:text-4xl">
                 {post.title}
               </h2>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-zinc-500">
-                <span className="font-medium text-zinc-700">{post.author}</span>
-                <span>{formatDate(post.createdAt)}</span>
-                <span className="text-zinc-300">•</span>
-                <span>조회수 {post.views.toLocaleString()}</span>
-                <span className="text-zinc-300">•</span>
-                <span>댓글 {comments.length}</span>
+              <div className="flex flex-wrap items-center justify-between gap-4 text-sm text-zinc-500">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="font-medium text-zinc-700">{post.author}</span>
+                  <span>{formatDate(post.createdAt)}</span>
+                  <span className="text-zinc-300">•</span>
+                  <span>조회수 {post.views.toLocaleString()}</span>
+                  <span className="text-zinc-300">•</span>
+                  <span>댓글 {comments.length}</span>
+                </div>
+                <PostActions postId={post.id} apiBaseUrl={API_BASE_URL} />
               </div>
             </div>
 
