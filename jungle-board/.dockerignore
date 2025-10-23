@@ -1,0 +1,12 @@
+node_modules
+.pnpm-store
+.git
+dist
+.next
+coverage
+Dockerfile
+docker-compose*.yml
+*.log
+tmp
+apps/frontend/.next
+apps/backend/dist

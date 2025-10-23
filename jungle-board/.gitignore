@@ -1,0 +1,16 @@
+# Package managers
+node_modules/
+.pnpm-store/
+.pnp/
+.pnp.*
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build artifacts
+dist/
+.next/
+coverage/
+
+# Misc
+.DS_Store
