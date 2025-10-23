@@ -1,4 +1,4 @@
-# Jungle Board Monorepo
+# Haru Board Monorepo
 
 ## 프로젝트 구조
 ```

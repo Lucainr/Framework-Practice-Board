@@ -52,31 +52,29 @@ export default async function EditPostPage({
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 py-12">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 sm:px-6 lg:px-8">
-        <header className="flex flex-col gap-3">
-          <p className="text-sm font-semibold text-emerald-600">COMMUNITY</p>
-          <h1 className="text-3xl font-bold text-zinc-900 sm:text-4xl">
-            게시글 수정
-          </h1>
-          <p className="text-sm leading-6 text-zinc-600 sm:text-base">
-            내용을 업데이트한 뒤 저장하면 상세 페이지에서 바로 확인할 수 있습니다.
-          </p>
-        </header>
+    <div className="flex flex-col gap-8 fade-up">
+      <header className="fade-up rounded-[28px] border border-[var(--border)] bg-[var(--background-alt)] px-8 py-9 shadow-[0_18px_48px_rgba(12,36,70,0.08)]">
+        <span className="pill mb-3 inline-flex">Edit</span>
+        <h1 className="text-3xl font-semibold text-[var(--foreground)] sm:text-[38px]">
+          게시글 수정
+        </h1>
+        <p className="mt-3 text-sm leading-6 text-[var(--muted)] sm:text-base">
+          내용을 업데이트하고 저장하면 즉시 상세 화면에 반영됩니다.
+        </p>
+      </header>
 
-        <PostEditorForm
-          apiBaseUrl={API_BASE_URL}
-          mode="edit"
-          postId={post.id}
-          initialValues={{
-            title: post.title,
-            content: post.content,
-            category: post.category,
-            authorId: post.authorId,
-            authorName: post.author,
-          }}
-        />
-      </div>
+      <PostEditorForm
+        apiBaseUrl={API_BASE_URL}
+        mode="edit"
+        postId={post.id}
+        initialValues={{
+          title: post.title,
+          content: post.content,
+          category: post.category,
+          authorId: post.authorId,
+          authorName: post.author,
+        }}
+      />
     </div>
   );
 }

@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
 
-const COHORT_OPTIONS = Array.from({ length: 10 }, (_, index) => 5 + index);
-
 type FormState = {
   name: string;
   email: string;
@@ -15,8 +13,6 @@ type FormState = {
   passwordConfirm: string;
   birthDate: string;
   phone: string;
-  cohort: number | "";
-  studentNumber: string;
 };
 
 const INITIAL_FORM: FormState = {
@@ -26,8 +22,6 @@ const INITIAL_FORM: FormState = {
   passwordConfirm: "",
   birthDate: "",
   phone: "",
-  cohort: "",
-  studentNumber: "",
 };
 
 export default function RegisterPage() {
@@ -44,9 +38,7 @@ export default function RegisterPage() {
       form.password.trim().length >= 8 &&
       form.password.trim() === form.passwordConfirm.trim() &&
       Boolean(form.birthDate) &&
-      form.phone.trim().length >= 7 &&
-      typeof form.cohort === "number" &&
-      /^\d{2}$/.test(form.studentNumber.trim())
+      form.phone.trim().length >= 7
     );
   }, [form]);
 
@@ -77,8 +69,6 @@ export default function RegisterPage() {
           password: form.password.trim(),
           birthDate: form.birthDate,
           phone: form.phone.trim(),
-          cohort: form.cohort,
-          studentNumber: form.studentNumber.trim(),
         }),
       });
 
@@ -100,177 +90,153 @@ export default function RegisterPage() {
     }
   };
 
+  const inputClass =
+    "rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[rgba(118,125,139,0.45)] focus:border-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(10,132,255,0.18)]";
+
   return (
-    <div className="relative flex min-h-screen items-center justify-center bg-white px-6 py-12 text-zinc-900">
+    <div className="mx-auto flex min-h-[calc(100vh-200px)] w-full max-w-[1120px] items-center px-4 text-[var(--foreground)] sm:px-6 fade-up">
       {showSuccess ? (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-3xl bg-white p-8 text-center shadow-2xl transition-transform duration-300 ease-out">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl text-emerald-600">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(28,32,43,0.45)] backdrop-blur">
+          <div className="panel flex w-full max-w-sm flex-col items-center gap-4 rounded-[28px] px-10 py-12 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[rgba(10,132,255,0.12)] text-2xl text-[var(--accent-primary)]">
               ✓
             </div>
-            <h2 className="text-xl font-semibold text-zinc-900">회원가입이 완료됐어요!</h2>
-            <p className="text-sm text-zinc-500">
+            <h2 className="text-2xl font-semibold text-[var(--foreground)]">회원가입이 완료됐어요!</h2>
+            <p className="text-sm text-[var(--muted)]">
               잠시 후 로그인 화면으로 이동합니다.
             </p>
           </div>
         </div>
       ) : null}
-      <div className="w-full max-w-3xl rounded-3xl border border-zinc-200 bg-white shadow-xl">
-        <div className="grid gap-10 p-10 md:grid-cols-[260px,1fr] md:items-start">
-          <header className="space-y-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-600">
-              Join the Community
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
-              Jungle Board 회원가입
-            </h1>
-            <p className="text-sm leading-6 text-zinc-500">
-              아래 정보를 입력하면 커뮤니티 활동을 시작할 수 있습니다.
-            </p>
-            <div className="space-y-2 text-xs text-zinc-400">
-              <p>정확한 정보가 등록되어야 커뮤니티를 온전히 이용할 수 있어요.</p>
-              <p>전화번호는 로그인 알림 및 계정 복구 용도로만 사용됩니다.</p>
-            </div>
-          </header>
+      <div className="panel grid w-full gap-12 px-10 py-12 sm:px-14 md:grid-cols-[300px,1fr] md:items-start">
+        <header className="space-y-5 fade-up">
+          <span className="pill w-fit">Sign Up</span>
+          <h1 className="text-3xl font-semibold leading-tight sm:text-[38px]">
+            Wook Board에 합류하세요
+          </h1>
+          <p className="text-sm leading-6 text-[var(--muted)]">
+            절제된 색감과 감각적인 인터랙션이 돋보이는 Wook 커뮤니티. 공지, 자유, Q&amp;A, 정보 게시판을 하나의 정갈한 환경에서 누려보세요.
+          </p>
+          <div className="space-y-2 rounded-2xl border border-[rgba(226,230,240,0.8)] bg-[rgba(244,244,247,0.75)] px-5 py-4 text-xs text-[rgba(118,125,139,0.75)]">
+            <p>· 정확한 정보 입력 시 계정 안정성과 접근 권한이 유지됩니다.</p>
+            <p>· 전화번호는 알림 및 계정 복구 목적 외에는 사용하지 않습니다.</p>
+          </div>
+        </header>
 
-          <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-            <div className="grid gap-y-10 gap-x-6 sm:grid-cols-2">
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">이름</span>
-                <input
-                  value={form.name}
-                  onChange={(event) => updateField("name", event.target.value)}
-                  type="text"
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
-                  placeholder="홍길동"
-                />
-              </label>
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">이메일</span>
-                <input
-                  value={form.email}
-                  onChange={(event) => updateField("email", event.target.value)}
-                  type="email"
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
-                  placeholder="name@example.com"
-                />
-              </label>
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">비밀번호</span>
-                <input
-                  value={form.password}
-                  onChange={(event) => updateField("password", event.target.value)}
-                  type="password"
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
-                  placeholder="8자 이상 입력해주세요"
-                />
-              </label>
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">비밀번호 확인</span>
-                <input
-                  value={form.passwordConfirm}
-                  onChange={(event) => updateField("passwordConfirm", event.target.value)}
-                  type="password"
-                  className={`rounded-xl border px-4 py-3 text-sm text-zinc-900 focus:outline-none focus:ring-2 ${
-                    form.passwordConfirm
-                      ? form.passwordConfirm.trim() === form.password.trim()
-                        ? "border-emerald-400 bg-emerald-50/40 focus:border-emerald-500 focus:ring-emerald-100"
-                        : "border-red-400 bg-red-50/30 focus:border-red-500 focus:ring-red-100"
-                      : "border-zinc-200 bg-zinc-50/80 focus:border-emerald-500 focus:bg-white focus:ring-emerald-100"
+        <form className="fade-up fade-delay-1 flex flex-col gap-8" onSubmit={handleSubmit}>
+          <div className="grid gap-y-8 gap-x-6 sm:grid-cols-2">
+            <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+              <span>이름</span>
+              <input
+                value={form.name}
+                onChange={(event) => updateField("name", event.target.value)}
+                type="text"
+                className={inputClass}
+                placeholder="홍길동"
+                autoComplete="name"
+              />
+            </label>
+            <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+              <span>이메일</span>
+              <input
+                value={form.email}
+                onChange={(event) => updateField("email", event.target.value)}
+                type="email"
+                className={inputClass}
+                placeholder="name@example.com"
+                autoComplete="email"
+              />
+            </label>
+            <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+              <span>비밀번호</span>
+              <input
+                value={form.password}
+                onChange={(event) => updateField("password", event.target.value)}
+                type="password"
+                className={inputClass}
+                placeholder="8자 이상 입력해주세요"
+                autoComplete="new-password"
+              />
+            </label>
+            <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+              <span>비밀번호 확인</span>
+              <input
+                value={form.passwordConfirm}
+                onChange={(event) => updateField("passwordConfirm", event.target.value)}
+                type="password"
+                className={`${inputClass} ${
+                  form.passwordConfirm
+                    ? form.passwordConfirm.trim() === form.password.trim()
+                      ? "border-[rgba(10,132,255,0.45)] bg-[rgba(10,132,255,0.08)]"
+                      : "border-[rgba(251,113,133,0.6)] bg-[#fff5f5]"
+                    : ""
+                }`}
+                placeholder="비밀번호를 다시 입력해주세요"
+                autoComplete="new-password"
+              />
+              {form.passwordConfirm ? (
+                <p
+                  className={`text-xs font-medium ${
+                    form.passwordConfirm.trim() === form.password.trim()
+                      ? "text-[var(--accent-primary)]"
+                      : "text-[#f87171]"
                   }`}
-                  placeholder="비밀번호를 다시 입력해주세요"
-                />
-                {form.passwordConfirm ? (
-                  <p
-                    className={`text-xs font-medium ${
-                      form.passwordConfirm.trim() === form.password.trim()
-                        ? "text-emerald-600"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {form.passwordConfirm.trim() === form.password.trim()
-                      ? "비밀번호가 일치합니다."
-                      : "비밀번호가 일치하지 않습니다."}
-                  </p>
-                ) : null}
-              </label>
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">생년월일</span>
-                <input
-                  value={form.birthDate}
-                  onChange={(event) => updateField("birthDate", event.target.value)}
-                  type="date"
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
-                />
-              </label>
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">전화번호</span>
-                <input
-                  value={form.phone}
-                  onChange={(event) => updateField("phone", event.target.value)}
-                  type="tel"
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
-                  placeholder="010-0000-0000"
-                />
-              </label>
-              <label className="flex flex-col gap-3 text-sm">
-                <span className="font-medium text-zinc-700">정글 기수</span>
-                <select
-                  value={form.cohort}
-                  onChange={(event) =>
-                    updateField(
-                      "cohort",
-                      event.target.value ? Number.parseInt(event.target.value, 10) : "",
-                    )
-                  }
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
                 >
-                  <option value="">기수를 선택하세요</option>
-                  {COHORT_OPTIONS.map((cohort) => (
-                    <option key={cohort} value={cohort}>
-                      {cohort}기
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label className="flex flex-col gap-3 text-sm sm:col-span-2">
-                <span className="font-medium text-zinc-700">정글 교육생 번호</span>
-                <input
-                  value={form.studentNumber}
-                  onChange={(event) => updateField("studentNumber", event.target.value)}
-                  type="text"
-                  className="rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-3 text-sm text-zinc-900 focus:border-emerald-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100"
-                  placeholder="예 : 01"
-                />
-              </label>
-            </div>
+                  {form.passwordConfirm.trim() === form.password.trim()
+                    ? "비밀번호가 일치합니다."
+                    : "비밀번호가 일치하지 않습니다."}
+                </p>
+              ) : null}
+            </label>
+            <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+              <span>생년월일</span>
+              <input
+                value={form.birthDate}
+                onChange={(event) => updateField("birthDate", event.target.value)}
+                type="date"
+                className={inputClass}
+              />
+            </label>
+            <label className="flex flex-col gap-2 text-sm font-medium text-[var(--foreground)]">
+              <span>전화번호</span>
+              <input
+                value={form.phone}
+                onChange={(event) => updateField("phone", event.target.value)}
+                type="tel"
+                className={inputClass}
+                placeholder="010-0000-0000"
+                autoComplete="tel"
+              />
+            </label>
+          </div>
 
-            {error ? <p className="text-sm text-red-500">{error}</p> : null}
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs text-zinc-400">
-                회원가입 시 커뮤니티 이용 약관과 개인정보 처리방침에 동의하게 됩니다.
-              </p>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-300"
-              >
-                {submitting ? "가입 중..." : "회원가입"}
-              </button>
-            </div>
-            <p className="text-center text-xs text-zinc-500">
-              이미 계정이 있으신가요? {" "}
-              <button
-                type="button"
-                onClick={() => router.replace("/login")}
-                className="font-semibold text-emerald-600 hover:text-emerald-500"
-              >
-                로그인 하러가기
-              </button>
+          {error ? (
+            <p className="rounded-2xl border border-[rgba(251,113,133,0.6)] bg-[#fff5f5] px-4 py-3 text-sm font-medium text-[#f87171]">
+              {error}
             </p>
-          </form>
-        </div>
+          ) : null}
+
+          <div className="flex flex-col gap-3 rounded-2xl border border-[rgba(226,230,240,0.8)] bg-[rgba(244,244,247,0.85)] px-5 py-4 text-xs text-[rgba(118,125,139,0.75)] sm:flex-row sm:items-center sm:justify-between">
+            <p>회원가입 시 커뮤니티 이용 약관과 개인정보 처리방침에 동의하게 됩니다.</p>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="primary-button px-6 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {submitting ? "가입 중..." : "회원가입"}
+            </button>
+          </div>
+          <p className="text-center text-xs text-[var(--muted)]">
+            이미 계정이 있으신가요?{" "}
+            <button
+              type="button"
+              onClick={() => router.replace("/login")}
+              className="font-semibold text-[var(--accent-primary)] hover:text-[#056de1]"
+            >
+              로그인 하러가기
+            </button>
+          </p>
+        </form>
       </div>
     </div>
   );

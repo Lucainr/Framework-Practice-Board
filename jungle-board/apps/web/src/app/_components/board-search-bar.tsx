@@ -16,7 +16,7 @@ export default function BoardSearchBar({
       role="search"
       method="get"
       action="/main-board"
-      className="flex w-full items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50/80 px-4 py-2 shadow-inner sm:w-auto"
+      className="flex w-full items-center gap-3 rounded-2xl border border-[rgba(226,230,240,0.8)] bg-[rgba(255,255,255,0.96)] px-5 py-3 shadow-[0_12px_28px_rgba(15,23,42,0.08)] transition focus-within:border-[rgba(10,132,255,0.85)] focus-within:shadow-[0_16px_36px_rgba(10,132,255,0.18)] sm:w-auto"
     >
       {category ? (
         <input type="hidden" name="category" value={category} />
@@ -28,7 +28,7 @@ export default function BoardSearchBar({
         viewBox="0 0 20 20"
         fill="none"
         stroke="currentColor"
-        className="h-5 w-5 text-zinc-400"
+        className="h-5 w-5 text-[rgba(105,116,134,0.65)]"
         aria-hidden="true"
       >
         <path
@@ -44,11 +44,11 @@ export default function BoardSearchBar({
         defaultValue={defaultValue}
         placeholder={placeholder}
         name="search"
-        className="flex-1 border-none bg-transparent text-sm text-zinc-700 placeholder:text-zinc-400 focus:outline-none"
+        className="flex-1 border-none bg-transparent text-sm text-[var(--foreground)] placeholder:text-[rgba(110,116,128,0.55)] focus:outline-none"
       />
       <button
         type="submit"
-        className="hidden rounded-lg bg-emerald-600 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-500 sm:inline-flex"
+        className="hidden rounded-full border border-[rgba(210,214,224,0.8)] bg-[rgba(244,244,247,0.9)] px-4 py-2 text-xs font-medium text-[var(--foreground)] transition hover:bg-[rgba(233,234,240,0.95)] sm:inline-flex"
       >
         검색
       </button>
