@@ -149,20 +149,20 @@ export default function PostEditorForm({
   };
 
   return (
-    <section className="flex flex-col gap-6 rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
+    <section className="panel fade-up flex flex-col gap-8 px-8 py-9">
       {!isAuthenticated ? (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface-muted)] px-4 py-3 text-sm font-medium text-[var(--foreground)]">
           게시글을 작성하거나 수정하려면 먼저 로그인해주세요.
         </div>
       ) : null}
       {isEditing && isAuthenticated && !isAuthor ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="rounded-xl border border-[rgba(248,113,113,0.5)] bg-[#fff5f5] px-4 py-3 text-sm text-[#e11d48]">
           본인 게시글만 수정할 수 있습니다.
         </div>
       ) : null}
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-700" htmlFor="title">
+          <label className="text-sm font-medium text-[var(--foreground)]" htmlFor="title">
             제목
           </label>
           <input
@@ -172,19 +172,19 @@ export default function PostEditorForm({
             onChange={updateField("title")}
             placeholder="게시글 제목을 입력하세요"
             disabled={!canSubmit}
-            className="rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-800 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:bg-zinc-100"
+            className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--foreground)] placeholder:text-[rgba(118,125,139,0.45)] focus:border-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(10,132,255,0.18)] disabled:cursor-not-allowed disabled:bg-[var(--surface-muted)] disabled:text-[rgba(118,125,139,0.6)]"
           />
         </div>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
           <div className="flex-1">
-            <span className="text-sm font-medium text-zinc-700">작성자</span>
-            <div className="mt-2 rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-2.5 text-sm font-semibold text-zinc-700">
+            <span className="text-sm font-medium text-[var(--foreground)]">작성자</span>
+            <div className="mt-2 rounded-2xl border border-[rgba(226,230,240,0.8)] bg-[rgba(244,244,247,0.75)] px-4 py-3 text-sm font-semibold text-[var(--foreground)]">
               {authorName || "로그인 필요"}
             </div>
           </div>
           <div className="flex-1">
-            <label className="text-sm font-medium text-zinc-700" htmlFor="category">
+            <label className="text-sm font-medium text-[var(--foreground)]" htmlFor="category">
               카테고리
             </label>
             <select
@@ -192,7 +192,7 @@ export default function PostEditorForm({
               value={form.category}
               onChange={updateField("category")}
               disabled={!canSubmit}
-              className="mt-2 w-full rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-800 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:bg-zinc-100"
+              className="mt-2 w-full rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--foreground)] focus:border-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(10,132,255,0.18)] disabled:cursor-not-allowed disabled:bg-[var(--surface-muted)] disabled:text-[rgba(118,125,139,0.6)]"
             >
               {CATEGORIES.map((category) => (
                 <option key={category} value={category}>
@@ -204,7 +204,7 @@ export default function PostEditorForm({
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium text-zinc-700" htmlFor="content">
+          <label className="text-sm font-medium text-[var(--foreground)]" htmlFor="content">
             내용
           </label>
           <textarea
@@ -213,24 +213,28 @@ export default function PostEditorForm({
             onChange={updateField("content")}
             placeholder="본문 내용을 작성해주세요."
             disabled={!canSubmit}
-            className="min-h-[260px] rounded-xl border border-zinc-200 px-4 py-3 text-sm leading-6 text-zinc-800 focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-200 disabled:cursor-not-allowed disabled:bg-zinc-100"
+            className="min-h-[260px] rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-5 py-4 text-sm leading-7 text-[var(--foreground)] placeholder:text-[rgba(118,125,139,0.45)] focus:border-[var(--accent-primary)] focus:outline-none focus:ring-2 focus:ring-[rgba(10,132,255,0.18)] disabled:cursor-not-allowed disabled:bg-[var(--surface-muted)] disabled:text-[rgba(118,125,139,0.6)]"
           />
         </div>
 
-        {error ? <p className="text-sm text-red-500">{error}</p> : null}
+        {error ? (
+          <p className="rounded-2xl border border-[rgba(251,113,133,0.6)] bg-[#fff5f5] px-4 py-3 text-sm font-medium text-[#e11d48]">
+            {error}
+          </p>
+        ) : null}
 
-        <div className="flex justify-end gap-3">
+        <div className="flex flex-col gap-3 sm:flex-row sm:justify-end">
           <button
             type="button"
             onClick={() => router.back()}
-            className="inline-flex items-center rounded-xl border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-600 transition hover:border-zinc-300 hover:text-zinc-800"
+            className="rounded-full border border-[rgba(210,214,224,0.8)] bg-[rgba(244,244,247,0.9)] px-6 py-3 text-sm font-medium text-[var(--foreground)] transition hover:bg-[rgba(233,234,240,0.95)] sm:w-auto"
           >
             취소
           </button>
           <button
             type="submit"
             disabled={submitting || !canSubmit}
-            className="inline-flex items-center rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:bg-emerald-300"
+            className="primary-button w-full justify-center px-6 py-3 text-sm disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
           >
             {submitting ? "처리 중..." : mode === "edit" ? "수정 완료" : "등록"}
           </button>

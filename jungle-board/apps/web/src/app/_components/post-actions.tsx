@@ -65,7 +65,7 @@ export default function PostActions({ postId, apiBaseUrl, authorId }: PostAction
     <div className="flex flex-wrap items-center gap-2">
       <Link
         href={`/posts/${postId}/edit`}
-        className="inline-flex items-center rounded-xl border border-zinc-200 px-4 py-2 text-sm font-semibold text-zinc-600 transition hover:border-zinc-300 hover:text-zinc-800"
+        className="rounded-full border border-[rgba(226,230,240,0.8)] bg-[rgba(244,244,247,0.9)] px-5 py-2 text-sm font-medium text-[var(--foreground)] transition hover:bg-[rgba(233,234,240,0.95)]"
       >
         수정
       </Link>
@@ -73,7 +73,7 @@ export default function PostActions({ postId, apiBaseUrl, authorId }: PostAction
         type="button"
         onClick={handleDelete}
         disabled={deleting}
-        className="inline-flex items-center rounded-xl border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:border-red-300 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-70"
+        className="inline-flex items-center rounded-full border border-[rgba(248,113,113,0.4)] bg-[#fff5f5] px-5 py-2 text-sm font-medium text-[#e11d48] transition hover:border-[rgba(248,113,113,0.6)] hover:bg-[#ffe5e9] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {deleting ? "삭제 중..." : "삭제"}
       </button>

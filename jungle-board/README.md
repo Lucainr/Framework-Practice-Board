@@ -1,4 +1,4 @@
-# Jungle Board Monorepo
+# Wook Board Monorepo
 
 ## 프로젝트 구조
 ```
@@ -21,12 +21,11 @@ docker-compose.prod.yml
    ```
 2. 개발용 컨테이너 실행
    ```bash
- docker compose -f docker-compose.dev.yml up --build
-  ```
- - 프런트엔드: http://localhost:3000
-  - 백엔드 API: http://localhost:3001
-  - PostgreSQL: localhost:5432
-  - 최초 한 번 아래 명령으로 데이터베이스 생성: `createdb -h localhost -U jungle jungle`
+   docker compose -f docker-compose.dev.yml up --build
+   ```
+   - 프런트엔드: http://localhost:3000
+   - 백엔드 API: http://localhost:3001
+   - PostgreSQL: localhost:5432
 
 ## 직접 실행 명령어
 ```bash

@@ -1,25 +1,19 @@
 export default function NoticeBoardPage() {
   return (
-    <div className="min-h-screen bg-slate-950 px-6 py-20 text-white">
-      <div className="mx-auto flex max-w-5xl flex-col gap-10">
-        <header className="space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200/80">
-            Jungle Board
-          </p>
-          <h1 className="text-4xl font-semibold tracking-tight">공지사항</h1>
-          <p className="max-w-3xl text-base text-white/70">
-            커뮤니티 운영진의 공식 안내와 정책 변경, 이벤트 알림을 확인하세요.
-            중요한 정보는 알림 설정을 통해 놓치지 마세요.
-          </p>
-        </header>
+    <div className="flex flex-col gap-8 fade-up">
+      <header className="fade-up rounded-[28px] border border-[var(--border)] bg-[var(--background-alt)] px-8 py-9 shadow-[0_18px_48px_rgba(12,36,70,0.08)]">
+        <span className="pill mb-3 inline-flex">Notice</span>
+        <h1 className="text-3xl font-semibold text-[var(--foreground)] sm:text-[38px]">
+          공지사항
+        </h1>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-[var(--muted)] sm:text-base">
+          커뮤니티 운영진의 안내와 정책 변경, 이벤트 소식을 빠르게 확인하세요. 중요한 내용은 즐겨찾기에 고정해두면 더욱 편리합니다.
+        </p>
+      </header>
 
-        <section className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur">
-          <p className="text-sm text-white/60">
-            추후 공지 사항 목록과 세부 내용을 API와 연결해 표시하세요. 고정 공지는
-            상단에 고정하는 UI를 추천합니다.
-          </p>
-        </section>
-      </div>
+      <section className="fade-up fade-delay-1 rounded-[24px] border border-[var(--border)] bg-[var(--surface)] px-7 py-8 text-sm text-[var(--muted)] shadow-[0_12px_32px_rgba(12,36,70,0.06)]">
+        추후 공지 목록과 고정 공지를 API와 연결해 표현해주세요.
+      </section>
     </div>
   );
 }
